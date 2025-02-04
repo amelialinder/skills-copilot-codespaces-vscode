@@ -1,4 +1,4 @@
-//create web server 
+// Create web server
 //load http module
 var http = require('http');
 var url = require('url');
@@ -32,4 +32,3 @@ http.createServer(function (req, res) {
 }).listen(8081);
 // Console will print the message
 console.log('Server running at http://127.0.0.1:8081/');
-
