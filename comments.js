@@ -1,13 +1,35 @@
 //create web server 
-const express = require('express');
-const app = express();
-const path = require('path');
-const fs = require('fs');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-
-//use cors to allow cross origin resource sharing
-app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+//load http module
+var http = require('http');
+var url = require('url');
+var fs = require('fs');
+var path = require('path');
+var comments = [];
+//create http server
+http.createServer(function (req, res) {
+    //parse the request containing file name
+    var pathname = url.parse(req.url).pathname;
+    //print the name of the file for which request is made
+    console.log("Request for " + pathname + " received.");
+    //read the requested file content from file system
+    fs.readFile(pathname.substr(1), function (err, data) {
+        if (err) {
+            console.log(err);
+            //HTTP Status: 404 : NOT FOUND
+            //Content Type: text/plain
+            res.writeHead(404, { 'Content-Type': 'text/html' });
+        } else {
+            //Page found
+            //HTTP Status: 200 : OK
+            //Content Type: text/plain
+            res.writeHead(200, { 'Content-Type': 'text/html' });
+            //write the content of the file to response body
+            res.write(data.toString());
+        }
+        //send the response body 
+        res.end();
+    });
+}).listen(8081);
+// Console will print the message
+console.log('Server running at http://
 
